@@ -20,10 +20,10 @@
 #include <unistd.h>
 #include <sysdep-cancel.h>
 #include <syscall-template.h>
-#include <lind_syscall_num.h>
+#include <asm/unistd.h> /* For Linux syscall numbers */
 
 int
 __access (const char *file, int type)
 {
-   return MAKE_SYSCALL(ACCESS_SYSCALL, "syscall|access", (uint64_t) file, (uint64_t) type, NOTUSED, NOTUSED, NOTUSED, NOTUSED);
+   return MAKE_SYSCALL(__NR_access, "syscall|access", (uint64_t) file, (uint64_t) type, NOTUSED, NOTUSED, NOTUSED, NOTUSED);
 }

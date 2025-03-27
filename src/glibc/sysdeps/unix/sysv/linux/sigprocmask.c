@@ -18,12 +18,11 @@
 #include <signal.h>
 #include <pthreadP.h>              /* SIGCANCEL, SIGSETXID */
 #include <syscall-template.h>
+#include <asm/unistd.h>  // Add this line for Linux syscall numbers
 
 /* Get and/or change the set of blocked signals.  */
 int
 __sigprocmask (int how, const sigset_t *set, sigset_t *oset)
 {
-   return MAKE_SYSCALL(149, "syscall|sigprocmask", (uint64_t) how, (uint64_t) set, (uint64_t) oset, NOTUSED, NOTUSED, NOTUSED);
+   return MAKE_SYSCALL(__NR_rt_sigprocmask, "syscall|sigprocmask", (uint64_t) how, (uint64_t) set, (uint64_t) oset, NOTUSED, NOTUSED, NOTUSED);
 }
-libc_hidden_def (__sigprocmask)
-weak_alias (__sigprocmask, sigprocmask)
